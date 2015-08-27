@@ -253,6 +253,9 @@ public class SSLSocketChannel2 implements ByteChannel, WrappedByteChannel {
 		if( inCrypt.hasRemaining() ) {
 			unwrap();
 			int amount = transfereTo( inData, dst );
+			if (engineStatus == SSLEngineResult.Status.CLOSED) {
+				return -1;
+			}
 			if( amount > 0 )
 				return amount;
 		}
